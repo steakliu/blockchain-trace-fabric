@@ -108,4 +108,6 @@ public interface SysUserMapper
      * @return 结果
      */
     public SysUser checkEmailUnique(String email);
+
+    List<SysUser> selectUserByDeptId(String deptId);
 }

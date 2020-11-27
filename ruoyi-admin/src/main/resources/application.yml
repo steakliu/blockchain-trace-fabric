@@ -30,6 +30,14 @@ server:
     # Tomcat启动初始化的线程数，默认值25
     min-spare-threads: 30
 
+fdfs:
+  so-timeout: 1501
+  connect-timeout: 601
+  thumb-image:
+    width: 60
+    height: 60
+  tracker-list: 193.112.126.68:22122
+
 # 日志配置
 logging:
   level:
@@ -59,11 +67,11 @@ spring:
   # redis 配置
   redis:
     # 地址
-    host: 116.198.160.39
+    host: 193.112.126.68
     # 端口，默认为6379
     port: 6379
     # 密码
-    password:
+    password: mengbao
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -116,7 +124,7 @@ xss:
   # 排除链接（多个用逗号分隔）
   excludes: /system/notice/*
   # 匹配链接
-  urlPatterns: /system/*,/monitor/*,/tool/*
+  urlPatterns: /traces/*,/system/*,/monitor/*,/tool/*,
 
 
 

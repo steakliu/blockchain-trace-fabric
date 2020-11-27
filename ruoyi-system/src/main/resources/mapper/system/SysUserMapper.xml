@@ -102,6 +102,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
 		select user_id, email from sys_user where email = #{email} limit 1
 	</select>
+
+	<select id="selectUserByDeptId" parameterType="String" resultMap="SysUserResult">
+		select user_name, nick_name from sys_user , sys_user_role , sys_role
+		where sys_user.user_id = sys_user_role.user_id
+		and sys_user_role.role_id = sys_role.role_id
+		and sys_role.role_key = 'driver'
+	</select>
+
 	
 	<insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
  		insert into sys_user(

@@ -173,12 +173,17 @@
                 <artifactId>ruoyi-generator</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>
-			
             <!-- 核心模块-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
                 <artifactId>ruoyi-framework</artifactId>
                 <version>${ruoyi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.tobato</groupId>
+                <artifactId>fastdfs-client</artifactId>
+                <version>1.27.2</version>
             </dependency>
 			
             <!-- 系统模块-->
@@ -195,6 +200,12 @@
                 <version>${ruoyi.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-traces</artifactId>
+                <version>3.1.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -205,7 +216,7 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
-        <module>system-trace</module>
+        <module>ruoyi-traces</module>
     </modules>
     <packaging>pom</packaging>
 
