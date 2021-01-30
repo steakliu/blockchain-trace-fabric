@@ -36,7 +36,7 @@ fdfs:
   thumb-image:
     width: 60
     height: 60
-  tracker-list: 193.112.126.68:22122
+  tracker-list: 127.0.0.1:22122
 
 # 日志配置
 logging:
@@ -67,11 +67,11 @@ spring:
   # redis 配置
   redis:
     # 地址
-    host: 193.112.126.68
+    host: 127.0.0.1
     # 端口，默认为6379
     port: 6379
     # 密码
-    password: mengbao
+    password: 
     # 连接超时时间
     timeout: 10s
     lettuce:
