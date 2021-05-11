@@ -6,15 +6,15 @@
 
 #### 软件架构
 
-此系统有四个模块，已上传Gitee， blockchain-trace-node-go ，blockchain-trace-mpvue ，blockchain-trace-vue ，blockchain-trace-springboot。
+此系统有四个模块，已上传Gitee， blockchain-trace-bcnetwork ，blockchain-trace-applets ，blockchain-trace-pc ，blockchain-trace-basic-data。
 
-    blockchain-trace-node-go：区块链网络，可直接将traceNetwork上传至服务器，然后启动里面的脚本。
+    blockchain-trace-bcnetwork：区块链网络，可直接将文件上传至服务器，然后启动里面的脚本。
 
-    blockchain-trace-mpvue：小程序端溯源，做得十分简单。
+    blockchain-trace-applets：小程序端溯源，做得十分简单。
 
-    blockchain-trace-vue：PC端,使用的是RuoYi-Vue
+    blockchain-trace-pc：PC端,使用的是RuoYi-Vue
 
-    blockchain-trace-springboot：系统基础数据后台，使用的是RuoYi
+    blockchain-trace-basic-data：系统基础数据后台，使用的是RuoYi
 
     前端：Vue.js , Element UI , mpvue
 
@@ -29,13 +29,13 @@
 #### 安装教程
 
 
-1.先部署好区块链网络（blockchain-trace-node-go）：
+1.先部署好区块链网络（blockchain-trace-bcnetwork）：
 将traceNetwork上传至服务器（也可自己搭建），进入basic-network目录中，启动start.sh脚本（./start.sh）,启动成功后进入webapp目录，启动start.sh脚本（此脚本是安装只能合约，它里面包含了其他几个脚本，可以自己观看），启动成功后看一下docker容器，不出意外的话会安装了6个chaincode,安装成功后执行node enrollAdmin.js 和 node registerUser.js , 生成对应的密钥文件后，最后启动node服务，命令为 node app.js ， 如果需要让其常驻后台，需要安装pm2，然后执行启动 pm2 start app.js  , 停止  pm2 stop app.js ， （环境变量需要有node，npm , golang）
     
-2.系统基础数据后端 （blockchain-trace-springboot）
+2.系统基础数据后端 （blockchain-trace-basic-data）
 配置好Redis，MySQL , FastDFS , 端口为8088，（本系统全部所有服务都采用Docker部署）
 
-3.PC端（blockchain-trace-vue）
+3.PC端（blockchain-trace-pc）
 
     npm install --registry=https://registry.npm.taobao.org
 
@@ -43,7 +43,7 @@
 
     npm run build:prod
 
-4.小程序（blockchain-trace-mpvue）
+4.小程序（blockchain-trace-applets）
 自己使用开发者工具打开
 
     
