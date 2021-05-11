@@ -1,0 +1,21 @@
+{
+  "navigationBarTitleText": "产品详情",
+	"usingComponents": {
+	    "i-panel": "../../static/iview/dist/panel/index",
+		"i-row": "../../static/iview/dist/row/index",
+		"i-col": "../../static/iview/dist/col/index",
+		"i-button": "../../static/iview/dist/button/index",
+		"i-divider": "../../static/iview/dist/divider/index",
+		"i-input": "../../static/iview/dist/input/index",
+		"i-tab-bar": "../../static/iview/dist/tab-bar/index",
+		"i-tab-bar-item": "../../static/iview/dist/tab-bar-item/index",
+		"i-modal": "../../static/iview/dist/modal/index",
+		"i-drawer": "../../static/iview/dist/drawer/index",
+		"i-card": "../../static/iview/dist/card/index",
+		"i-cell-group": "../../static/iview/dist/cell-group/index",
+		"i-cell": "../../static/iview/dist/cell/index",
+		"i-steps": "../../static/iview/dist/steps/index",
+		"i-step": "../../static/iview/dist/step/index",
+		"l-album":"../../static/lin-ui/dist/album/index"
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"navigationBarTitleText": "产品溯源",
+	"usingComponents": {
+	    "i-button": "../../static/iview/dist/button/index",
+		"i-tag": "../../static/iview/dist/tag/index",
+		"i-input": "../../static/iview/dist/input/index",
+		"i-modal": "../../static/iview/dist/modal/index",
+		"i-row": "../../static/iview/dist/row/index",
+		"i-col": "../../static/iview/dist/col/index",
+		"i-toast": "../../static/iview/dist/toast/index",
+		"l-button":"../../static/lin-ui/dist/button/index",
+		"l-search-bar":"../../static/lin-ui/dist/search-bar/index",
+		"l-card":"../../static/lin-ui/dist/card/index",
+		"l-tag":"../../static/lin-ui/dist/tag/index",
+		"l-icon":"../../static/lin-ui/dist/icon/index",
+		"l-grid":"../../static/lin-ui/dist/grid/index",
+		"l-grid-item":"../../static/lin-ui/dist/grid-item/index",
+		"l-notice-bar":"../../static/lin-ui/dist/notice-bar/index",
+		"l-toast":"../../static/lin-ui/dist/toast/index",
+		"l-loading":"../../static/lin-ui/dist/loading/index"
+		
+	}
+}

@@ -1,0 +1,8 @@
+Example app listening on port 8080!
+arr  6732611912195903488
+Successfully loaded user1 from persistence
+Query has completed, checking results
+Response is  {"crops_id":"6732516188095516672","product_id":"6732611912195903488","remarks":"零售商售卖","retailer":"桂林销售点","retailer_id":"liqing","retailer_name":"桂林销售点李青","retailer_tel":"15988776655"}
+Successfully loaded user1 from persistence
+Query has completed, checking results
+Response is  [{"Key":"6732522103465054208", "Record":{"Net_Content":"500g*5盒","cooking_recommend":"食用前前最好先用水泡三到四个小时","crops_id":"6732516188095516672","factory":"贵阳生产厂商","keep_mathod":"干燥，通风处，不可放在潮湿，阴暗处","leader":"刘晓伟","leader_tel":"18388999988","mixed_ingredients":"无配料","product_id":"6732522103465054208","product_name":"织金美味养身竹荪","remarks":"欢迎下次继续购买","time":"2020-11-12 13:19:13","work_hours":"一个星期","workshop":"第二车间"}}]

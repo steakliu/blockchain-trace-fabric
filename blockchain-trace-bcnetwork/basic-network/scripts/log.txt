@@ -1,0 +1,1 @@
+[31m2020-10-19 19:24:18.457 CST [main] main -> ERRO 001[0m Fatal error when initializing core config : error when reading core config file: Unsupported Config Type ""
