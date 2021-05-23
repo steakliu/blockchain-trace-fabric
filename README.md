@@ -8,9 +8,9 @@
 
 此系统有四个模块，已上传Gitee， blockchain-trace-bcnetwork ，blockchain-trace-applets ，blockchain-trace-pc ，blockchain-trace-basic-data。
 
-    blockchain-trace-bcnetwork：区块链网络，可直接将文件上传至服务器，然后启动里面的脚本。
+    blockchain-trace-bcnetwork：区块链网络，可直接将文件上传至服务器，然后启动里面的脚本
 
-    blockchain-trace-applets：小程序端溯源，做得十分简单。
+    blockchain-trace-applets：小程序端溯源，做得十分简单
 
     blockchain-trace-pc：PC端,使用的是RuoYi-Vue
 
