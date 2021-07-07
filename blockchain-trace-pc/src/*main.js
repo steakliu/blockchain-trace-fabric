@@ -26,6 +26,9 @@ import axios from 'axios'
 import SnowflakeId from "snowflake-id";
 
 import JsonViewer from 'vue-json-viewer'
+import Avue from '@smallwei/avue';
+import '@smallwei/avue/lib/index.css';
+Vue.use(Avue);
  
 // Import JsonViewer as a Vue.js plugin
 Vue.use(JsonViewer)
