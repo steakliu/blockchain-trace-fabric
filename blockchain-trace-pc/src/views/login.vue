@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <h3 class="title">基于区块链的农产品溯源平台</h3>
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
@@ -32,7 +32,7 @@
           <img :src="codeUrl" @click="getCode" class="login-code-img"/>
         </div>
       </el-form-item>
-      <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+		<el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
       <el-form-item style="width:100%;">
         <el-button
           :loading="loading"
@@ -45,11 +45,33 @@
           <span v-else>登 录 中...</span>
         </el-button>
       </el-form-item>
+	  <el-form-item style="width:100%;">
+	    <el-button
+	      :loading="loading"
+	      size="medium"
+	      type="success"
+	      style="width:100%;"
+	      @click.native.prevent="roTrace"
+	    >
+		<span >消费者溯源</span>
+	    </el-button>
+	  </el-form-item>
     </el-form>
     <!--  底部  -->
-    <div class="el-login-footer">
+   <!-- <div class="el-login-footer">
       <span>Copyright © 2018-2020 ruoyi.vip All Rights Reserved.</span>
-    </div>
+    </div> -->
+	
+	<el-dialog
+	  title="农产品溯源"
+	  :visible.sync="drawer"
+	  width="95%">
+	  <el-divider content-position="left">农产品溯源</el-divider>
+	  <div>
+		  <Trace></Trace>
+	  </div>
+	  
+	</el-dialog>
   </div>
 </template>
 
@@ -57,7 +79,7 @@
 import { getCodeImg } from "@/api/login";
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from '@/utils/jsencrypt'
-
+import Trace from './Trace.vue'
 export default {
   name: "Login",
   data() {
@@ -81,8 +103,12 @@ export default {
         code: [{ required: true, trigger: "change", message: "验证码不能为空" }]
       },
       loading: false,
-      redirect: undefined
+      redirect: undefined,
+	  drawer:false,
     };
+  },
+  components:{
+  	  Trace
   },
   watch: {
     $route: {
@@ -97,6 +123,10 @@ export default {
     this.getCookie();
   },
   methods: {
+	  roTrace(){
+		   this.drawer = true
+	  },
+	  
     getCode() {
       getCodeImg().then(res => {
         this.codeUrl = "data:image/gif;base64," + res.img;
