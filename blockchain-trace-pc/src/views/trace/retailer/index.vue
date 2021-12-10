@@ -1,19 +1,5 @@
 <template>
 	<div class="app-container">
-		<el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
-			<el-form-item label="货物id" prop="deptName">
-				<el-input v-model="queryParams.deptName" placeholder="货物id" clearable size="small" @keyup.enter.native="handleQuery" />
-			</el-form-item>
-			<el-form-item label="状态" prop="status">
-				<el-select v-model="queryParams.status" placeholder="运输状态" clearable size="small">
-					<el-option v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
-				</el-select>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="cyan" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-				<el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-			</el-form-item>
-		</el-form>
 
 		<el-divider>待处理业务</el-divider>
 
@@ -33,12 +19,12 @@
 			<el-table-column label="操作" align="center" class-name="small-padding fixed-width">
 				<template slot-scope="scope">
 					<el-button v-show="scope.row.retailerReceiveStatus === null" size="mini" type="text" @click="receive(scope.row)">签收</el-button>
-					<el-button size="mini" type="text" @click="noticeTransport(scope.row)">打印条形码</el-button>
+<!--					<el-button size="mini" type="text" @click="noticeTransport(scope.row)">打印条形码</el-button>-->
 					<el-button size="mini" type="text" @click="getTraceId(scope.row)">获取产品溯源ID</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
-		
+
 
 		<el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
 			<el-form ref="form" :model="form" label-width="80px">
@@ -58,14 +44,14 @@
 						</el-form-item>
 					</el-col>
 				</el-row>
-				
+
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button type="primary" @click="createMaching">确 定</el-button>
 				<el-button @click="cancel">取 消</el-button>
 			</div>
 		</el-dialog>
-		
+
 		<el-dialog center title="联系运输" :visible.sync="noticeDetaiDialog" width="500px" append-to-body>
 			<el-form ref="form" :model="trasportForm" label-width="80px">
 				<el-row>
@@ -93,11 +79,11 @@
 				<el-button @click="cancel">取 消</el-button>
 			</div>
 		</el-dialog>
-		
+
 		<el-dialog center title="产品溯源ID" :visible.sync="traceIdDialog" width="500px" append-to-body>
 			<json-viewer :value="retailerInfo.product_id" expand-depth=5 copyable boxed></json-viewer>
 		</el-dialog>
-		
+
 	</div>
 </template>
 
@@ -165,20 +151,25 @@ export default {
 	methods: {
 		//获取产品溯源ID
 		getTraceId(row){
-			this.traceIdDialog = true
 			const retailerArray = []
 			retailerArray.push(row.cropsId)
 			retailerArray.push(this.$store.getters.name)
 			this.$httpBlock
 				.get(this.$httpUrl + '/retailerapi/queryRetailerByCropsId?cropsId='+row.cropsId+'&retailerId='+this.$store.getters.name)
 				.then(res => {
-					this.retailerInfo = res.data[0].Record;
+          if (res.data.length < 1){
+            this.msgError("请先签收后再获取");
+          }else {
+            this.traceIdDialog = true
+            this.retailerInfo = res.data[0].Record;
+          }
+
 				})
 				.catch(err => {
 					this.msgError('存储异常 ' + err);
 				});
 		},
-		
+
 		//签收
 		receive(row){
 			const retailerArray = []
@@ -216,7 +207,7 @@ export default {
 						.catch(err => {
 							this.msgError('存储异常 ' + err);
 						});
-			})	
+			})
 				.catch(() => {
 					this.$message({
 						type: 'info',
@@ -224,7 +215,7 @@ export default {
 					});
 				});
 		},
-		
+
 		addNoticeTrasport(){
 			this.trasportForm.cropsId = this.checkInfo.cropsId;
 			this.trasportForm.farmerUserName = this.$store.getters.name;
@@ -244,7 +235,7 @@ export default {
 					this.msgError('联系运输失败，发生异常');
 				});
 		},
-		
+
 		noticeTransport(row){
 			this.checkInfo = row;
 			this.noticeDetaiDialog = true
@@ -256,9 +247,9 @@ export default {
 			getFactoryByDeptId(123)
 				.then(res => {
 					this.factoryList = res.data;
-				})	
+				})
 		},
-		
+
 		/**
 		 * 出库
 		 */
@@ -266,7 +257,7 @@ export default {
 			this.checkInfo = row;
 			this.open = true
 		},
-		
+
 		createMaching(){
 		    const checkInfoArray = []
 			const id = new this.$snowFlakeId().generate();
@@ -298,7 +289,7 @@ export default {
 					this.msgError('存储异常 ' + err);
 				});
 		},
-		
+
 		getFile(file) {
 			this.imageUrl = URL.createObjectURL(file.raw);
 			this.getBase64(file.raw).then(res => {
@@ -316,7 +307,7 @@ export default {
 					});
 			});
 		},
-		
+
 		getBase64(file) {
 			return new Promise(function(resolve, reject) {
 				const reader = new FileReader();
@@ -333,8 +324,8 @@ export default {
 				};
 			});
 		},
-		
-		
+
+
 		getList() {
 			queryCropsList(this.$store.getters.deptId).then(res => {
 				this.transportList = res.data;

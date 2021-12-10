@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      title: '若依管理系统',
+      title: '区块链溯源平台',
       logo: logoImg
     }
   }

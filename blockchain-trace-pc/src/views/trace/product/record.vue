@@ -1,17 +1,5 @@
 <template>
 	<div class="app-container">
-		<el-form  ref="queryForm" :inline="true">
-			<el-form-item label="任务名称" prop="roleName">
-				<el-input  placeholder="请输入任务名称" clearable size="small" style="width: 240px"/>
-			</el-form-item>
-			<el-form-item label="任务状态" prop="status">
-				<el-input  placeholder="请输入任务状态" clearable size="small" style="width: 240px"/>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="cyan" icon="el-icon-search" size="mini" >搜索</el-button>
-				<el-button icon="el-icon-refresh" size="mini" >重置</el-button>
-			</el-form-item>
-		</el-form>
 		<el-divider>待处理工作业务</el-divider>
 		<el-table :data="taskLists">
 			<el-table-column type="selection" width="55" align="center" />
@@ -23,11 +11,11 @@
 			<el-table-column label="操作" align="center" class-name="small-padding fixed-width">
 				<template slot-scope="scope">
 					<el-button size="mini" type="text" @click="addWorkContent(scope.row)">上报工作内容</el-button>
-					
+
 				</template>
 			</el-table-column>
 		</el-table>
-		
+
 		<el-dialog center title="上报工作详情" :visible.sync="workContentDialog" width="700px" append-to-body>
 			<el-form ref="form" label-width="80px" :model="recordForm">
 			<el-row>
@@ -53,8 +41,8 @@
 				<el-button type="primary" @click="submitOperation">确 定</el-button>
 				<el-button @click="cancel">取 消</el-button>
 			</div>
-		</el-dialog>	
-	</div>	
+		</el-dialog>
+	</div>
 </template>
 
 <script>
@@ -97,12 +85,12 @@ export default {
 					this.msgError('存储异常 ' + err);
 				});
 		},
-		
+
 		addWorkContent(row){
 			this.taskInfo = row
 			this.workContentDialog = true
 		},
-		
+
 		taskList(){
 			queryTaskList().then(res => {
 				this.taskLists = res.data
@@ -111,8 +99,8 @@ export default {
 			})
 		}
 	}
-	
-}	
+
+}
 </script>
 
 <style>

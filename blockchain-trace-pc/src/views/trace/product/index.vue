@@ -1,39 +1,6 @@
 <template>
 	<div class="app-container">
-		<el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true">
-			<el-form-item label="作物名称" prop="roleName">
-				<el-input v-model="queryParams.roleName" placeholder="请输入作物名称" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
-			</el-form-item>
-			<el-form-item label="作物状态" prop="status">
-				<el-select v-model="queryParams.status" placeholder="作物状态" clearable size="small" style="width: 240px">
-					<el-option v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
-				</el-select>
-			</el-form-item>
-			<el-form-item label="种植周期">
-				<el-date-picker
-					v-model="dateRange"
-					size="small"
-					style="width: 240px"
-					value-format="yyyy-MM-dd"
-					type="daterange"
-					range-separator="-"
-					start-placeholder="开始日期"
-					end-placeholder="结束日期"
-				></el-date-picker>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="cyan" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-				<el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-			</el-form-item>
-		</el-form>
-
-		<el-row :gutter="10" class="mb8">
-			<el-col :span="1.5"><el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">添加事项</el-button></el-col>
-			<el-col :span="1.5"><el-button type="success" icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate">修改</el-button></el-col>
-			<el-col :span="1.5"><el-button type="danger" icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete">删除</el-button></el-col>
-			<el-col :span="1.5"><el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport">导出</el-button></el-col>
-			<right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-		</el-row>
+    <el-divider>待处理业务</el-divider>
 
 		<el-table v-loading="loading" :data="cropsList" @selection-change="handleSelectionChange">
 			<el-table-column type="selection" width="55" align="center" />
@@ -54,7 +21,7 @@
 					<el-tag v-show="scope.row.outFactoryStatus === null">未出库</el-tag>
 					<el-tag v-show="scope.row.outFactoryStatus === 1">已出库</el-tag>
 				</template>
-			</el-table-column>	
+			</el-table-column>
 			<el-table-column label="操作" align="center" class-name="small-padding fixed-width">
 				<template slot-scope="scope">
 					<el-button v-show="scope.row.machingStatus !== 1 && scope.row.machingStatus !== 2" size="mini" type="text" @click="taskDistribution(scope.row)">任务分发</el-button>
@@ -69,7 +36,7 @@
 		</el-table>
 
 		<pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize" @pagination="getList" />
-		
+
 		<el-dialog center title="任务分发" :visible.sync="open" width="700px" append-to-body>
 			<el-form ref="form" :model="form" label-width="80px">
 				<el-form-item label="任务标题"><el-input v-model="form.taskName" placeholder="请输入任务标题"></el-input></el-form-item>
@@ -80,7 +47,7 @@
 				<el-button @click="cancel">取 消</el-button>
 			</div>
 		</el-dialog>
-		
+
 		<el-dialog center title="生产基本信息添加" :visible.sync="addThingDialog" width="700px" append-to-body>
 			<el-form ref="form" label-width="80px" :model="recordForm">
 			<el-row>
@@ -90,7 +57,7 @@
 				<el-col :span="12">
 					<el-form-item label="配料" prop="nickName"><el-input v-model="recordForm.MixedIngredients" placeholder="请输入" /></el-form-item>
 				</el-col>
-			</el-row>	
+			</el-row>
 			<el-row>
 				<el-col :span="12">
 					<el-form-item label="负责人" prop="nickName"><el-input v-model="recordForm.Leader" placeholder="请输入" /></el-form-item>
@@ -107,7 +74,7 @@
 					<el-form-item label="生产工时" prop="nickName"><el-input v-model="recordForm.WorkHours" placeholder="请输入" /></el-form-item>
 				</el-col>
 			</el-row>
-		
+
 			<el-row>
 				<el-col :span="12">
 					<el-form-item label="储藏方法" prop="nickName">
@@ -128,7 +95,7 @@
 				<el-button @click="cancel">取 消</el-button>
 			</div>
 		</el-dialog>
-		
+
 		<el-dialog center title="任务下发详情" :visible.sync="taskInfoDialog" width="700px" append-to-body>
 			<el-row>
 				<el-col :span="12">任务ID：{{ taskInfo.taskId }}</el-col>
@@ -148,7 +115,7 @@
 				<el-col :span="24">详情内容：{{ taskInfo.taskRemark }}</el-col>
 			</el-row>
 		</el-dialog>
-		
+
 		<el-dialog center title="产品基本信息" :visible.sync="productInfoDialog" width="700px" append-to-body>
 			<el-row>
 				<el-col :span="24">作物ID：{{ productInfos.crops_id }}</el-col>
@@ -184,7 +151,7 @@
 				<el-col :span="12">备注：{{ productInfos.remarks }}</el-col>
 			</el-row>
 		</el-dialog>
-		
+
 		<el-dialog center title="员工工作量证明" :visible.sync="staffWorkDialog" width="1200px" append-to-body>
 			<el-row :gutter="8" >
 				<el-col :span="6" v-for="(info,index) in operationList" :key="index" style="padding-top: 10px;">
@@ -213,7 +180,7 @@
 				<br>
 			</el-row>
 		</el-dialog>
-		
+
 		<el-dialog center title="联系运输" :visible.sync="noticeDetaiDialog" width="500px" append-to-body>
 			<el-form ref="form" :model="trasportForm" label-width="80px">
 				<el-row>
@@ -241,7 +208,7 @@
 				<el-button @click="cancel">取 消</el-button>
 			</div>
 		</el-dialog>
-		
+
 	</div>
 </template>
 
@@ -369,15 +336,15 @@ export default {
 							  message: '已出库!'
 							});
 						})
-			          
+
 			        }).catch(() => {
 			          this.$message({
 			            type: 'info',
 			            message: '已取消出库'
-			          });          
+			          });
 			        });
 		},
-		
+
 		addNoticeTrasport(){
 			this.trasportForm.cropsId = this.checkInfo.cropsId;
 			this.trasportForm.farmerUserName = this.$store.getters.name;
@@ -397,7 +364,7 @@ export default {
 					this.msgError('联系运输失败，发生异常');
 				});
 		},
-		
+
 		noticeTransport(row){
 			this.checkInfo = row;
 			this.noticeDetaiDialog = true
@@ -410,9 +377,9 @@ export default {
 				.then(res => {
 					this.factoryList = res.data;
 				})
-				.catch(err => {});		
+				.catch(err => {});
 		},
-		
+
 		staffWork(row){
 			this.staffWorkDialog = true;
 			this.$httpBlock
@@ -428,7 +395,7 @@ export default {
 			    		this.msgError('查询异常 ' + err);
 			    	});
 		},
-		
+
 		queryProductInfo(row){
 			this.productInfoDialog = true
 			this.$httpBlock
@@ -440,7 +407,7 @@ export default {
 			    		this.msgError('查询异常 ' + err);
 			    	});
 		},
-		
+
 		submitProductInfo(){
 			const productInfoArray = [];
 			const id = new this.$snowFlakeId().generate();
@@ -465,7 +432,7 @@ export default {
 	        		if (res.status === 200) {
 						updateProductWriteStatus(this.cropsInfos.cropsId).then(res => {
 							this.addThingDialog = false;
-							this.msgSuccess("id存储成功");
+							this.msgSuccess("数据上链成功");
 							this.getCropsList();
 						}).catch(err => {
 							this.msgError("出现异常");
@@ -476,7 +443,7 @@ export default {
 	        		this.msgError('存储异常 ' + err);
 	        	});
 		},
-		
+
 		/**
 		 * 根据cropsId查询任务详情
 		 */
@@ -488,12 +455,12 @@ export default {
 				this.msgError("查询异常")
 			})
 		},
-		
+
 		addThing(row){
 			this.cropsInfos = row
 			this.addThingDialog = true
 		},
-		
+
 		/**
 		 * 确定发布
 		 */
@@ -513,7 +480,7 @@ export default {
 					this.msgSuccess("产品进入加工状态")
 					this.getCropsList();
 				}).catch(err => {
-					
+
 				})
 				this.msgSuccess("发布任务成功");
 				this.open = false;
@@ -528,7 +495,7 @@ export default {
 			this.productInfo = row
 			this.open = true
 		},
-		
+
 
 		getFile(file) {
 			this.imageUrl = URL.createObjectURL(file.raw);

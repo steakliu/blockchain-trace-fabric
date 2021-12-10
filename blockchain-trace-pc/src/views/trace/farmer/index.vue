@@ -1,37 +1,8 @@
 <template>
 	<div class="app-container">
-		<el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true">
-			<el-form-item label="作物名称" prop="roleName">
-				<el-input v-model="queryParams.roleName" placeholder="请输入作物名称" clearable size="small" style="width: 240px" @keyup.enter.native="handleQuery" />
-			</el-form-item>
-			<el-form-item label="作物状态" prop="status">
-				<el-select v-model="queryParams.status" placeholder="作物状态" clearable size="small" style="width: 240px">
-					<el-option v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
-				</el-select>
-			</el-form-item>
-			<el-form-item label="种植周期">
-				<el-date-picker
-					v-model="dateRange"
-					size="small"
-					style="width: 240px"
-					value-format="yyyy-MM-dd"
-					type="daterange"
-					range-separator="-"
-					start-placeholder="开始日期"
-					end-placeholder="结束日期"
-				></el-date-picker>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="cyan" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-				<el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-			</el-form-item>
-		</el-form>
 
 		<el-row :gutter="10" class="mb8">
 			<el-col :span="1.5"><el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd">添加作物</el-button></el-col>
-			<el-col :span="1.5"><el-button type="success" icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate">修改</el-button></el-col>
-			<el-col :span="1.5"><el-button type="danger" icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete">删除</el-button></el-col>
-			<el-col :span="1.5"><el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport">导出</el-button></el-col>
 			<right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
 		</el-row>
 
@@ -385,42 +356,45 @@ export default {
 		 * 物流追踪
 		 */
 		logisticsTrace(row) {
-			this.playTrackView = true;
-			const lineArr = [
-				[111.315, 23.4955],
-				[110.95752228710936, 23.37433777262006],
-				[109.19833649609373, 23.74883016517126],
-				[109.42355622265623, 24.320753154228328],
-			];
-			//创建地图
-			var map = new AMap.Map('container', {
-				resizeEnable: true,
-				center: [111.315, 23.4955],
-				zoom: 9
-			});
-			//标记车辆
-			var marker = new AMap.Marker({
-				position: [111.315, 23.4955],
-				icon: 'https://webapi.amap.com/images/car.png',
-				//坐标偏移
-				offset: new AMap.Pixel(-26, -13),
-				autoRotation: true,
-				angle: -90,
-				map: map
-			});
-			// 绘制轨迹路线
-			var polyline = new AMap.Polyline({
-				map: this.map,
-				//这里替换自己的坐标数据
-				path: lineArr,
-				borderWeight: 2, // 线条宽度，默认为 1
-				strokeColor: 'red', // 线条颜色
-				lineJoin: 'round' // 折线拐点连接处样式
-			});
-			map.add(polyline);
+		  this.$nextTick(() => {
+        this.playTrackView = true;
+        const lineArr = [
+          [111.315, 23.4955],
+          [110.95752228710936, 23.37433777262006],
+          [109.19833649609373, 23.74883016517126],
+          [109.42355622265623, 24.320753154228328],
+        ];
+        //创建地图
+        var map = new AMap.Map('container', {
+          resizeEnable: true,
+          center: [111.315, 23.4955],
+          zoom: 9
+        });
+        //标记车辆
+        var marker = new AMap.Marker({
+          position: [111.315, 23.4955],
+          icon: 'https://webapi.amap.com/images/car.png',
+          //坐标偏移
+          offset: new AMap.Pixel(-26, -13),
+          autoRotation: true,
+          angle: -90,
+          map: map
+        });
+        // 绘制轨迹路线
+        var polyline = new AMap.Polyline({
+          map: this.map,
+          //这里替换自己的坐标数据
+          path: lineArr,
+          borderWeight: 2, // 线条宽度，默认为 1
+          strokeColor: 'red', // 线条颜色
+          lineJoin: 'round' // 折线拐点连接处样式
+        });
+        map.add(polyline);
 
-			//调用方法开启动画
-			marker.moveAlong(lineArr, 30000);
+        //调用方法开启动画
+        marker.moveAlong(lineArr, 30000);
+      })
+
 		},
 
 		addNoticeTrasport() {
@@ -459,7 +433,7 @@ export default {
 				.then(res => {
 					this.factoryList = res.data;
 				})
-				.catch(err => {});	
+				.catch(err => {});
 			this.noticeDetaiDialog = true;
 		},
 
@@ -575,9 +549,7 @@ export default {
 						};
 						saveCrops(cropsUser)
 							.then(res => {
-								if (res.code === 200) {
-									this.msgSuccess('id存储成功');
-								}
+								this.getCropsList()
 							})
 							.catch(err => {
 								this.msgError('id存储异常 ' + err);

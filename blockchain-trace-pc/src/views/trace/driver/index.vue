@@ -1,20 +1,5 @@
 <template>
 	<div class="app-container">
-		<el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
-			<el-form-item label="货物id" prop="deptName">
-				<el-input v-model="queryParams.deptName" placeholder="货物id" clearable size="small" @keyup.enter.native="handleQuery" />
-			</el-form-item>
-			<el-form-item label="状态" prop="status">
-				<el-select v-model="queryParams.status" placeholder="运输状态" clearable size="small">
-					<el-option v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
-				</el-select>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="cyan" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-				<el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-			</el-form-item>
-		</el-form>
-
 		<el-divider>待处理业务</el-divider>
 
 		<br />
@@ -37,7 +22,7 @@
 					<el-button v-show="scope.row.status === 0" size="mini" type="text" @click="startTransport(scope.row)">开始配送</el-button>
 					<el-button v-show="scope.row.status === 1" size="mini" type="text" @click="transportLocation(scope.row)">中途定位</el-button>
 					<el-button v-show="scope.row.status === 1" size="mini" type="text" @click="isOk(scope.row)">配送完毕</el-button>
-					<el-button size="mini" type="text" @click="isOk(scope.row)">物流追踪</el-button>
+<!--					<el-button size="mini" type="text" @click="isOk(scope.row)">物流追踪</el-button>-->
 				</template>
 			</el-table-column>
 		</el-table>
@@ -162,11 +147,10 @@ export default {
 								};
 								saveAndUpdateTransportInfoToDb(transportInfo)
 									.then(res => {
-										this.msgSuccess('id储存成功');
 										this.getList();
 									})
 									.catch(err => {
-										this.msgError('id存储成功');
+
 									});
 							}
 						})
@@ -185,7 +169,7 @@ export default {
 					});
 				});
 		},
-		
+
 		transportLocation(row) {
 			const transportArray = [];
 			const id = new this.$snowFlakeId().generate();
@@ -219,21 +203,17 @@ export default {
 								};
 								saveAndUpdateTransportInfoToDb(transportInfo)
 									.then(res => {
-										this.msgSuccess('id储存成功');
 										this.getList();
 									})
 									.catch(err => {
-										this.msgError('id存储成功');
+
 									});
 							}
 						})
 						.catch(err => {
 							this.msgError('存储异常 ' + err);
 						});
-					this.$message({
-						type: 'success',
-						message: '定位成功!'
-					});
+
 				})
 				.catch(() => {
 					this.$message({
@@ -279,11 +259,11 @@ export default {
 								};
 								saveAndUpdateTransportInfoToDb(transportInfo)
 									.then(res => {
-										this.msgSuccess('id储存成功');
+
 										this.getList();
 									})
 									.catch(err => {
-										this.msgError('id存储成功');
+
 									});
 							}
 						})

@@ -1,20 +1,5 @@
 <template>
 	<div class="app-container">
-		<el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
-			<el-form-item label="货物id" prop="deptName">
-				<el-input v-model="queryParams.deptName" placeholder="货物id" clearable size="small" @keyup.enter.native="handleQuery" />
-			</el-form-item>
-			<el-form-item label="状态" prop="status">
-				<el-select v-model="queryParams.status" placeholder="运输状态" clearable size="small">
-					<el-option v-for="dict in statusOptions" :key="dict.dictValue" :label="dict.dictLabel" :value="dict.dictValue" />
-				</el-select>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="cyan" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-				<el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-			</el-form-item>
-		</el-form>
-
 		<el-divider>待处理业务</el-divider>
 
 		<br />
@@ -32,12 +17,12 @@
 			</el-table-column>
 			<el-table-column label="操作" align="center" class-name="small-padding fixed-width">
 				<template slot-scope="scope">
-					<el-button v-show="scope.row.outFactoryStatus === 0" size="mini" type="text" @click="outFactory(scope.row)">出库</el-button>
-					<el-button v-show="scope.row.outFactoryStatus === 0" size="mini" type="text" @click="noticeTransport(scope.row)">通知运输</el-button>
-				</template>
+					<el-button v-show="scope.row.outFactoryStatus === 0" size="mini" type="text" @click="noticeTransport(scope.row)">通知运输(1)</el-button>
+          <el-button v-show="scope.row.outFactoryStatus === 0" size="mini" type="text" @click="outFactory(scope.row)">出库(2)</el-button>
+        </template>
 			</el-table-column>
 		</el-table>
-		
+
 
 		<el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
 			<el-form ref="form" :model="form" label-width="80px">
@@ -57,14 +42,14 @@
 						</el-form-item>
 					</el-col>
 				</el-row>
-				
+
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button type="primary" @click="createMaching">确 定</el-button>
 				<el-button @click="cancel">取 消</el-button>
 			</div>
 		</el-dialog>
-		
+
 		<el-dialog center title="联系运输" :visible.sync="noticeDetaiDialog" width="500px" append-to-body>
 			<el-form ref="form" :model="trasportForm" label-width="80px">
 				<el-row>
@@ -92,7 +77,7 @@
 				<el-button @click="cancel">取 消</el-button>
 			</div>
 		</el-dialog>
-		
+
 	</div>
 </template>
 
@@ -173,7 +158,7 @@ export default {
 					this.msgError('联系运输失败，发生异常');
 				});
 		},
-		
+
 		noticeTransport(row){
 			this.checkInfo = row;
 			this.noticeDetaiDialog = true
@@ -185,9 +170,9 @@ export default {
 			getFactoryByDeptId(123)
 				.then(res => {
 					this.factoryList = res.data;
-				})	
+				})
 		},
-		
+
 		/**
 		 * 出库
 		 */
@@ -195,7 +180,7 @@ export default {
 			this.checkInfo = row;
 			this.open = true
 		},
-		
+
 		createMaching(){
 		    const checkInfoArray = []
 			const id = new this.$snowFlakeId().generate();
@@ -227,7 +212,7 @@ export default {
 					this.msgError('存储异常 ' + err);
 				});
 		},
-		
+
 		getFile(file) {
 			this.imageUrl = URL.createObjectURL(file.raw);
 			this.getBase64(file.raw).then(res => {
@@ -245,7 +230,7 @@ export default {
 					});
 			});
 		},
-		
+
 		getBase64(file) {
 			return new Promise(function(resolve, reject) {
 				const reader = new FileReader();
@@ -262,8 +247,8 @@ export default {
 				};
 			});
 		},
-		
-		
+
+
 		getList() {
 			listCrops(this.$store.getters.deptId).then(res => {
 				this.transportList = res.data;
