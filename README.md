@@ -6,7 +6,7 @@
 区块链网络采用Fabric，一共分为六个组织节点，农户，原料厂商，生产厂商，物流厂商，零售商，消费者  
 
 若有疑问，可关注公众号获取联系方法，点击联系作者，帮您解答。  
-![输入图片说明](https://gitee.com/ken-xue/Blockchain-APTrace-Fabric/blob/master/install-fabric-env/static/wechat.png)  
+![输入图片说明](https://gitee.com/ken-xue/Blockchain-APTrace-Fabric/blob/master/install-fabric-env/static/wechat.png "6.png")  
 
 #### 软件架构
 
