@@ -1,5 +1,6 @@
 基于Fabric的农产品溯源系统  
 <a href='https://gitee.com/ken-xue/Blockchain-APTrace-Fabric/stargazers'><img src='https://gitee.com/ken-xue/Blockchain-APTrace-Fabric/badge/star.svg?theme=dark' alt='star'></img></a>
+<a href='https://gitee.com/ken-xue/Blockchain-APTrace-Fabric/members'><img src='https://gitee.com/ken-xue/Blockchain-APTrace-Fabric/badge/fork.svg?theme=white' alt='fork'></img></a>
 
 #### 介绍
     
