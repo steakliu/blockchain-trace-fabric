@@ -39,7 +39,7 @@
 
 
 1.先部署好区块链网络（blockchain-trace-bcnetwork,这里需要先拉取好所需的docker镜像，fabric-orderer,fabric-peer,fabric-counchdb,fabric-tools,
-fabric-ca，然后tag为latest）：
+fabric-ca，然后tag为latest(拉取镜像可直接点击此链接过去复制命令<a href="https://gitee.com/steakliu/Blockchain-APTrace-Fabric/blob/master/install-fabric-env/pull-fabric-images.md"/>)）：
 将traceNetwork上传至服务器（也可自己搭建），进入basic-network目录中，启动start.sh脚本（./start.sh）,
 启动成功后进入webapp目录，启动start.sh脚本（此脚本是安装只能合约，它里面包含了其他几个脚本，可以自己观看），
 启动成功后看一下docker容器，不出意外的话会安装了6个chaincode,安装成功后执行node enrollAdmin.js 
