@@ -1,19 +1,14 @@
-基于Fabric的农产品溯源系统  
+#基于Fabric的农产品溯源系统  
 
-<a href='https://gitee.com/ken-xue/Blockchain-APTrace-Fabric/stargazers'><img src='https://gitee.com/ken-xue/Blockchain-APTrace-Fabric/badge/star.svg?theme=dark' alt='star'></img></a>
-<a href='https://gitee.com/ken-xue/Blockchain-APTrace-Fabric/members'><img src='https://gitee.com/ken-xue/Blockchain-APTrace-Fabric/badge/fork.svg?theme=white' alt='fork'></img></a>  
-
-<a href='https://gitee.com/ken-xue/Blockchain-APTrace-Fabric'><img src='https://gitee.com/ken-xue/Blockchain-APTrace-Fabric/widgets/widget_3.svg' alt='Fork me on Gitee'></img></a>
-
-#### 介绍
+## 介绍
     
 基于区块链的农产品溯源系统，分为pc端，h5端，后台采用SpringBoot，前端Vue，
 区块链网络采用Fabric，一共分为六个组织节点，农户，原料厂商，生产厂商，物流厂商，零售商，消费者  
 
-若有疑问，可关注公众号获取联系方法，点击联系作者，感谢您的支持。  
+若有疑问，可关注公众号获取联系方法，点击联系作者，消息回晚了别在意，都会回复的，感谢您的支持。    
 ![输入图片说明](install-fabric-env/image.png)
 
-#### 软件架构
+## 软件架构
 
 此系统有四个模块，已上传Gitee， blockchain-trace-bcnetwork ，blockchain-trace-applets ，blockchain-trace-pc ，blockchain-trace-basic-data。
 
@@ -35,11 +30,11 @@
 
     环境：Ubuntu16.04 64位(2核 4G以上)，Docker 18.09.7 , Docker-compose 1.29.1 , 
 
-#### 安装教程
+## 安装教程
 
 
 1.先部署好区块链网络（blockchain-trace-bcnetwork,这里需要先拉取好所需的docker镜像，fabric-orderer,fabric-peer,fabric-counchdb,fabric-tools,
-fabric-ca，然后tag为latest(拉取镜像可直接点击此链接过去复制命令<a href="https://gitee.com/steakliu/Blockchain-APTrace-Fabric/blob/master/install-fabric-env/pull-fabric-images.md"/>)）：
+fabric-ca，然后tag为latest([拉取docker镜像命令点击此处去复制](install-fabric-env/pull-fabric-images.md)）：
 将traceNetwork上传至服务器（也可自己搭建），进入basic-network目录中，启动start.sh脚本（./start.sh）,
 启动成功后进入webapp目录，启动start.sh脚本（此脚本是安装只能合约，它里面包含了其他几个脚本，可以自己观看），
 启动成功后看一下docker容器，不出意外的话会安装了6个chaincode,安装成功后执行node enrollAdmin.js 
@@ -49,7 +44,7 @@ fabric-ca，然后tag为latest(拉取镜像可直接点击此链接过去复制�
 （环境变量需要有node，npm , golang）
     
 2.系统基础数据后端 （blockchain-trace-basic-data）
-配置好Redis，MySQL , FastDFS , 端口为8088，（本系统全部所有服务都采用Docker部署）
+配置好Redis，MySQL , FastDFS(FastDFS的地址需要修改yml文件里面的地址和代码里面，不然访问不了) , 端口为8088，（本系统全部所有服务都采用Docker部署）
 
 3.PC端（blockchain-trace-pc）
 
@@ -61,15 +56,16 @@ fabric-ca，然后tag为latest(拉取镜像可直接点击此链接过去复制�
 
 4.小程序（blockchain-trace-applets）
 自己使用开发者工具打开
-
-
     
 
-#### **说明**
+## **申明**
+本人对区块链也只是了解一点皮毛，还有自己也没从事区块链工作，为有需要的同学解答问题完全出于人道主义，那些加上我后就让我远程调试的，我有时间
+肯定会帮忙，但是请先自己思考后，去网上找答案后，实在解决不了，我才帮忙，不要一上来就我不会，帮我调一下，大家都很忙，彼此尊重一下，你连star都
+舍不得给一个，还要让别人花几个小时去给你搭建环境，这不合适吧。本系统完全是demo级的，供大家学习。  
 
-本系统过于简单，只适合做你的毕业设计，课程设计，学习使用，本系统只是提供一个大致的思想，简单的流程，粗糙的实现，
+**开源不易，请给个star**。  
     
-#### 界面
+## 界面
 区块链浏览器
 ![区块链结构](https://images.gitee.com/uploads/images/2021/0510/100450_865a1f55_4775150.png "6.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/100501_6d258226_4775150.png "7.png")
