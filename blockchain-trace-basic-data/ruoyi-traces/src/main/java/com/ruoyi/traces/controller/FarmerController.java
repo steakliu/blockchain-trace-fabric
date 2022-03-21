@@ -14,6 +14,7 @@ import com.ruoyi.traces.domain.vo.CropsImageVo;
 import com.ruoyi.traces.service.FarmerService;
 import com.ruoyi.traces.utils.Base64Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Decoder;
 
@@ -27,6 +28,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/traces/farmer")
 public class FarmerController extends BaseController {
+
+    @Value("${fdfs.address}")
+    private String address;
 
     @Autowired
     private FarmerService farmerService;
@@ -60,7 +64,7 @@ public class FarmerController extends BaseController {
         String imageBase64 = cropsImageVo.getImageBase64().replace("data:image/jpeg;base64,", "");
         File file = Base64Util.base64ConvertFile(imageBase64);
         StorePath storePath = this.fastFileStorageClient.uploadImageAndCrtThumbImage(new FileInputStream(file),file.length(),"jpg",null);
-        return AjaxResult.success("http://193.112.126.68:8888/"+storePath.getFullPath());
+        return AjaxResult.success(address+storePath.getFullPath());
     }
 
     /**

@@ -37,7 +37,7 @@ fdfs:
     width: 60
     height: 60
   tracker-list: 127.0.0.1:22122
-
+  address: 127.0.0.1
 # 日志配置
 logging:
   level:

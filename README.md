@@ -1,16 +1,16 @@
-#基于Fabric的农产品溯源系统  
+# 基于Fabric的农产品溯源系统
 
-## 介绍
-    
+# 介绍
+
 基于区块链的农产品溯源系统，分为pc端，h5端，后台采用SpringBoot，前端Vue，
-区块链网络采用Fabric，一共分为六个组织节点，农户，原料厂商，生产厂商，物流厂商，零售商，消费者  
+区块链网络采用Fabric，一共分为六个组织节点，农户，原料厂商，生产厂商，物流厂商，零售商，消费者
 
-若有疑问，可关注公众号获取联系方法，点击联系作者，消息回晚了别在意，都会回复的，感谢您的支持。    
+若有疑问，可关注公众号获取联系方法，点击联系作者，消息回晚了别在意，都会回复的(出怎么安装mysql，redis，数据库怎么连不上，redis怎么连不上等问题)，感谢您的支持。    
 ![输入图片说明](install-fabric-env/image.png)
 
-## 软件架构
+# 软件架构
 
-此系统有四个模块，已上传Gitee， blockchain-trace-bcnetwork ，blockchain-trace-applets ，blockchain-trace-pc ，blockchain-trace-basic-data。
+此系统有四个模块， blockchain-trace-bcnetwork ，blockchain-trace-applets ，blockchain-trace-pc ，blockchain-trace-basic-data。
 
     blockchain-trace-bcnetwork：区块链网络，可直接将文件上传至服务器，然后启动里面的脚本
 
@@ -30,41 +30,151 @@
 
     环境：Ubuntu16.04 64位(2核 4G以上)，Docker 18.09.7 , Docker-compose 1.29.1 , 
 
-## 安装教程
+# 安装教程
+## 一.fabric网络
+### 1.确保环境配置好
+> node.js 12.*
+
+> docker
+
+> docker-compose
+
+> Redis
+
+> FastDFS
+
+> Mysql8
+
+> go语言环境
+
+### 2.拉取docker镜像
+
+#### pull
+``` 
+docker pull hyperledger/fabric-peer:1.2.0 && 
+docker pull hyperledger/fabric-orderer:1.2.0 && 
+docker pull hyperledger/fabric-ca:1.2.0 && 
+docker pull hyperledger/fabric-tools:1.2.0 && 
+docker pull hyperledger/fabric-ccenv:1.2.0 && 
+docker pull hyperledger/fabric-baseimage:0.4.10 && 
+docker pull hyperledger/fabric-baseos:0.4.10 && 
+docker pull hyperledger/fabric-couchdb:0.4.10
+```
+
+#### tag
+```
+docker tag hyperledger/fabric-peer:1.2.0 hyperledger/fabric-peer && 
+docker tag hyperledger/fabric-orderer:1.2.0 hyperledger/fabric-orderer && 
+docker tag hyperledger/fabric-ca:1.2.0 hyperledger/fabric-ca && 
+docker tag hyperledger/fabric-tools:1.2.0 hyperledger/fabric-tools && 
+docker tag hyperledger/fabric-ccenv:1.2.0 hyperledger/fabric-ccenv && 
+docker tag hyperledger/fabric-baseimage:0.4.10  hyperledger/fabric-baseimage && 
+docker tag hyperledger/fabric-baseos:0.4.10 hyperledger/fabric-baseos && 
+docker tag hyperledger/fabric-couchdb:0.4.10 hyperledger/fabric-couchdb 
+```
+
+### 3.上传代码到linux服务器/获取直接git拉取
+`blockchain-trace-bcnetwork`
+
+### 4.运行basic_network目录下的start.sh文件
+> chmod -R 777 start.sh
+
+>./start.sh
+
+此处会安装可能会出现问题，具体问题可以百度，
+
+### 5.运行webapp目录下的./start.sh
+先给webapp目录下的所有sh文件授权，如下
+```
+chmod -R 777 startFarmerCC.sh  
+```
+
+### 6.执行npm install安装依赖
+> npm install
+
+可能node版本问题安装会出一些问题，尽量保持版本为12.*
+
+### 7.安装用户密钥
+> node enrollAdmin.js
+
+> node registerUser.js
+
+执行node registerUser.js可能会安装失败，请删除一下hfc-key-store后重新执行，如果还是失败，可能就是npm install出问题。
+
+### 8.启动node服务(node服务就是一个中间件，连接前端和区块链网络)
+> node app.js
+
+如果需要让其常驻后台，需要安装pm2。
+> 启动：pm2 start app.js
+
+> 停止：pm2 stop app.js
+
+到这里，区块链网络就部署完成
+
+## 二.系统基础数据后台blockchain-trace-basic-data，是一个SpringBoot项目
+
+### 1.修改application.yml文件中的Redis地址和fastdfs地址
+```yaml
+  # redis 配置
+  redis:
+    # 地址
+    host: 127.0.0.1
+    # 端口，默认为6379
+    port: 6379
+    # 密码
+    password: 
+
+  fdfs:
+      so-timeout: 1501
+      connect-timeout: 601
+      thumb-image:
+        width: 60
+        height: 60
+      tracker-list: 127.0.0.1:22122
+      address: 127.0.0.1
+```
+### 2.修改application-druid.yml文件中mysql地址
+```yaml
+# 数据源配置
+spring:
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        druid:
+            # 主库数据源
+            master:
+                url: jdbc:mysql://127.0.0.1:3306/blockchain?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+                username: root
+                password: root
+```
+
+## 三.PC端（blockchain-trace-pc）
+
+### 1.安装依赖
+> npm install --registry=https://registry.npm.taobao.org
+
+### 2.修改连接区块链网络地址
+main.js，修改为区块链网络所在服务器地址
+```yaml
+Vue.prototype.$httpUrl = "http://localhost:8080/route";
+```
+### 3.启动项目
+> npm run dev
 
 
-1.先部署好区块链网络（blockchain-trace-bcnetwork,这里需要先拉取好所需的docker镜像，fabric-orderer,fabric-peer,fabric-counchdb,fabric-tools,
-fabric-ca，然后tag为latest([拉取docker镜像命令点击此处去复制](install-fabric-env/pull-fabric-images.md)）：
-将traceNetwork上传至服务器（也可自己搭建），进入basic-network目录中，启动start.sh脚本（./start.sh）,
-启动成功后进入webapp目录，启动start.sh脚本（此脚本是安装只能合约，它里面包含了其他几个脚本，可以自己观看），
-启动成功后看一下docker容器，不出意外的话会安装了6个chaincode,安装成功后执行node enrollAdmin.js 
-和 node registerUser.js(这里如果没有生成成功，执行npm install fabric-client后再试) 生成对应的密钥文件后，
-最后启动node服务，命令为 node app.js ， 
-如果需要让其常驻后台，需要安装pm2，然后执行启动 pm2 start app.js  , 停止  pm2 stop app.js ， 
-（环境变量需要有node，npm , golang）
-    
-2.系统基础数据后端 （blockchain-trace-basic-data）
-配置好Redis，MySQL , FastDFS(FastDFS的地址需要修改yml文件里面的地址和代码里面，不然访问不了) , 端口为8088，（本系统全部所有服务都采用Docker部署）
-
-3.PC端（blockchain-trace-pc）
-
-    npm install --registry=https://registry.npm.taobao.org
-
-    npm run dev
-
-    npm run build:prod
-
-4.小程序（blockchain-trace-applets）
+## 四.小程序（blockchain-trace-applets）
 自己使用开发者工具打开
-    
+
+## 架构图
+
 
 ## **申明**
 本人对区块链也只是了解一点皮毛，还有自己也没从事区块链工作，为有需要的同学解答问题完全出于人道主义，那些加上我后就让我远程调试的，我有时间
-肯定会帮忙，但是请先自己思考后，去网上找答案后，实在解决不了，我才帮忙，不要一上来就我不会，帮我调一下，大家都很忙，彼此尊重一下，你连star都
-舍不得给一个，还要让别人花几个小时去给你搭建环境，这不合适吧。本系统完全是demo级的，供大家学习。  
+肯定会帮忙，但是请先自己思考后，去网上找答案后，实在解决不了，我才帮忙，不要一上来就我不会，帮我调一下，大家都很忙，彼此尊重一下，运行这个项目，
+最起码你要懂怎么运行springboot项目，vue项目，会安装数据库这些吧，如果这些都不会，请先了解一下，这些问题一概不回答，完全没必要浪费彼此的时间，本系统完全是demo级的，供大家学习。
 
-**开源不易，请给个star**。  
-    
+**如果本项目帮助到你，请给个免费的star**。
+
 ## 界面
 区块链浏览器
 ![区块链结构](https://images.gitee.com/uploads/images/2021/0510/100450_865a1f55_4775150.png "6.png")
@@ -90,7 +200,7 @@ fabric-ca，然后tag为latest([拉取docker镜像命令点击此处去复制](i
 物流追踪（因本系统，这里忘记去做了，只是模拟了一下）
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/100223_1c37229e_4775150.png "5.png")
 
-司机运输定位（本系统采用PC端定位，实际上这是不行的，你想想，司机在开车过程中还要去打开浏览器进入系统去定位？这里只是模拟，让老师知道我要表达的意思，因为我也没钱去买设备来定位 :sweat:  :sweat: ）
+司机运输定位（本系统采用PC端定位，实际上这是不行的，你想想，司机在开车过程中还要去打开浏览器进入系统去定位？这里只是模拟 ）
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/101525_8ec61394_4775150.png "1.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/101537_479fa381_4775150.png "2.png")
 
@@ -122,7 +232,3 @@ pc溯源
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/234413_33dd3e47_4775150.png "5.png")
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/234428_bc064965_4775150.png "6.png")
 
-#### 参与贡献
-
-
-#### 特技
