@@ -33,7 +33,7 @@
 # 安装教程
 ## 一.fabric网络
 ### 1.确保环境配置好
-> node.js 8.*
+> node.js 12.*
 
 > docker
 
