@@ -12,8 +12,8 @@
     "body-parser": "^1.19.0",
     "co": "^4.6.0",
     "express": "^4.17.1",
-    "fabric-ca-client": "~1.2.0",
-    "fabric-client": "~1.2.0",
-    "grpc": "^1.6.0"
+    "fabric-ca-client": "~1.4.20",
+    "fabric-client": "~1.4.20",
+    "grpc": "^1.6.7"
   }
 }
