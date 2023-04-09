@@ -290,4 +290,4 @@ Vue.prototype.$httpUrl = "http://localhost:8080/route";
 项目都没运行，直接就在这里复制去并没有标注任何原作者的信息，这是很不尊重别人的，从而也看出你的不认真，**如果是你自己去运行过，那么你怎么用，怎么写都行**，我尊重你的认真，因为我也是一个认真且较真的人！
 
 ### 公众号
-![输入图片说明](install-fabric-env/image.png)  
+![输入图片说明](https://gitee.com/ken_xue/Blockchain-APTrace-Fabric/raw/master/install-fabric-env/image.png)  
