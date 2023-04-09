@@ -2,9 +2,12 @@
 
 >让人类餐桌上的食物回归到农耕时代！
 
-# 介绍  
+此系统作为我学生时代的一个课设作品，一晃多年已经过去，曾经羞涩可爱得我曾经变得成熟，也在到处是钢筋混泥土的城市里面穿梭，会彷徨，会失落，但是从没放弃过自己梦想，一个平凡的梦想，一个凡夫俗子的梦想。
 
->随着社会的不断发展，科技的不断进步，到了今天，你是否还记得故乡地里的那片只施农家肥的菜园，在小时候，物质虽然相对贫乏，但是吃到的
+毕业后一段时间，整理了代码上传到gitee，两年以来，没想到收获了一些star，这让我属实感到意外，不过也为此蒙羞，因为凌乱的代码和设计的不合理，让我羞愧万分，我追求简单，最好简单得像一杯白开水，但是，显然这个系统是不好的，但是回想起往事，我还是选择原谅自己，因为成长是一个过程，你得面对不好的东西，就像现在你得正视面对你自己！
+# 介绍
+
+随着社会的不断发展，科技的不断进步，到了今天，你是否还记得故乡地里的那片只施农家肥的菜园，在小时候，物质虽然相对贫乏，但是吃到的
 每一口在长大后再也没吃过那么香的，如今，为了生活，离开深爱的故乡，蜗居在城市的钢筋混泥土下，你是否会偶尔回味起哪些遗失的味道。
 
 基于区块链的农产品溯源系统，分为pc端，h5端，一共分为五个组织节点，农户，原料厂商，生产厂商，物流厂商，零售商，在全流程走完后，消费者买到产品后，可对其
@@ -14,7 +17,9 @@
 作用，比如农产品，供应链溯源，电子存证，司法行业，金融行业，实物赋能，教育档案管理，医疗，公证等等场景和行业中，区块链都有其天然优势，其不可篡改，去中心化，
 分布式，可追溯等特性，能在很多场景发挥作用。  
 
-![输入图片说明](install-fabric-env/image.png)
+### 组织架构图
+![输入图片说明](install-fabric-env/业务架构.png)
+
 
 # 系统模块和技术  
 
@@ -26,7 +31,7 @@
 
     blockchain-trace-bcnetwork：区块链网络，可直接将文件上传至服务器，然后启动里面的脚本
 
-    blockchain-trace-applets：小程序端溯源，做得十分简单
+    blockchain-trace-applets：小程序端溯源
 
     blockchain-trace-pc：PC端,使用的是RuoYi-Vue
 
@@ -38,9 +43,9 @@
 
     区块链：Fabric1.2
 
-    智能合约：Golang语言
+    智能合约：Golang
 
-    环境：Ubuntu16.04 64位(建议2核 4G以上，2G也能运行)，Docker 18.09.7 , Docker-compose 1.29.1 , 
+    环境：Ubuntu16.04 64位(建议2核 4G以上，2G也能运行)，Docker,  Docker-compose 
 
 因为本系统的区块链部分是完全按照最简单的来，比如共识是自带的solo，orderer节点是单节点，这些肯定都是不合理的，所以这个版本就单纯传达一个上层应用思想吧，
 后续可能会在此思想上重新搭建一套能够投入使用的。  
@@ -48,7 +53,7 @@
 # 安装教程
 ## 一.fabric网络  
 ### 1.确保环境配置好  
-> node.js 8* 
+> node.js 12
 
 > docker
 
@@ -109,14 +114,14 @@ chmod -R 777 startFarmerCC.sh
 
 可能node版本问题安装会出一些问题，node8应该是没问题的。   
 
-### 7.安装用户密钥  
+### 7.注册用户
 > node enrollAdmin.js  
 
 > node registerUser.js  
 
-执行node registerUser.js可能会安装失败，请删除一下hfc-key-store后重新执行，如果还是失败，可能就是npm install出问题。  
+执行node registerUser.js可能会安装失败，请删除一下hfc-key-store后重新执行，如果还是失败，可能就是npm install出问题，注意node版本，使用node12
 
-### 8.启动node服务(node服务就是一个中间件，连接前端和区块链网络)  
+### 8.启动node服务(node服务就是一个中间件，连接前端和fabric网络)  
 > node app.js  
 
 如果需要让其常驻后台，需要安装pm2。
@@ -169,7 +174,7 @@ spring:
 > npm install --registry=https://registry.npm.taobao.org
 
 ### 2.修改连接区块链网络地址
-main.js，修改为区块链网络所在服务器地址  
+main.js，ip地址修改为区块链网络所在服务器地址  
 ```yaml
 Vue.prototype.$httpUrl = "http://localhost:8080/route";
 ```
@@ -179,68 +184,110 @@ Vue.prototype.$httpUrl = "http://localhost:8080/route";
 
 ## 四.小程序（blockchain-trace-applets）
 自己使用开发者工具打开
-    
 
-## **扩展**  
-农产品溯源，其目的是给实物赋能，不单单是农产品，艺术品，工艺品等这些如果能给其赋能，那么其价值会得到一定程度的提升。  
 
-NFT这个概念想必了解区块链的同学都会知道它，我们称之为数字藏品，它其实是有很高的价值的，当然，如果你为了炒它，那么将毫无价值，如果我们将实物和NFT，供应链
-联合起来，就会碰撞出闪亮的火花，让NFT不单单只是一张图片，而是一种生活中的消费卷，是一种情感的见证卡片，是一种契约，更是一种连接人与人的桥梁。  
-
-我们也推出了NFT技术实现，在了解NFT的价值后，我们可以将其与实物结合，实现实物的赋能和价值提升，有兴趣可以去看看，学习一下NFT平台。  
-
-浏览地址：http://43.143.132.167/h5/#/
-
->如果本项目帮助到你，请给个免费的star  
     
 ## 界面
-区块链浏览器
-![区块链结构](https://images.gitee.com/uploads/images/2021/0510/100450_865a1f55_4775150.png "6.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/100501_6d258226_4775150.png "7.png")
+### 区块链浏览器
+这是调用fabric的api进行展示的，fabric生态里面国人贡献了一个fabric浏览器项目，可以去使用，不过都是调用fabric的api。
+<table>
+    <tr>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/100450_865a1f55_4775150.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/100501_6d258226_4775150.png "/></td>
+    </tr>
+</table>
 
 
-添加农作物
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/095409_1656ec9f_4775150.png "界面1.png")
+### 添加农作物
+这里是添加农作物部分，对于像农作物，肯定是一块一块的，所以在实际中，如果需要做农作物溯源的解决方案，那么我们可能需要对地块进行规划，然后借助物联网设备，传递地块指标数据和农作物情况。
+<table>
+    <tr>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/095409_1656ec9f_4775150.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/095812_c090b8eb_4775150.png"/></td>
+    </tr>
+</table>
 
-农作物链上详情
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/095812_c090b8eb_4775150.png "2.png")
 
-农作物种植过程记录
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/095938_b91c4a9e_4775150.png "3.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/100000_d3f09618_4775150.png "4.png")
+### 农作物种植过程记录
+种植过程十分关键，它能清晰展示农作物的生长过程，生长环境，这样有利于提高可行度，消费者也可以实地进行查看一些信息。
 
-物流追踪（因本系统，这里忘记去做了，只是模拟了一下）
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/100223_1c37229e_4775150.png "5.png")
+<table>
+    <tr>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/095938_b91c4a9e_4775150.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/100000_d3f09618_4775150.png"/></td>
+    </tr>
+</table>
 
-司机运输定位（本系统采用PC端定位，实际上这是不行的，你想想，司机在开车过程中还要去打开浏览器进入系统去定位？这里只是模拟 ）
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/101525_8ec61394_4775150.png "1.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/101537_479fa381_4775150.png "2.png")
+### 物流追踪
+只是模拟了现实场景，实际生产中，你的产品到了什么地方，这些数据都要进行上传，就像你网上购物，它的轨迹能够看到。
+<table>
+    <tr>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/100223_1c37229e_4775150.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/101525_8ec61394_4775150.png"/></td>
+         <td><img src="https://images.gitee.com/uploads/images/2021/0510/101537_479fa381_4775150.png"/></td>
+    </tr>
+</table>
 
-原料厂商质检报告上链
+
+### 原料厂商质检
+对原材料进行质检，当农作物被原料厂商收回来后，需要对原材料进行质检，防止原材料的伪劣，这里需要介入有关部门和检测机构，保证原材料的质量，这样才能生产出号的产品。
+
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/101838_07d8b55c_4775150.png "3.png")
 
-生产厂商部分截图
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/104012_a3d0a8f3_4775150.png "1.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/104029_3b281f09_4775150.png "2.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/104040_db0dd517_4775150.png "QQ图片20210510103842.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/104051_ded404ae_4775150.png "QQ图片20210510103846.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/104059_b6383ed4_4775150.png "5.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/104107_7bc0ed1e_4775150.png "6.png")
+### 生产厂商部分截图
+生产厂商这里就是对原材料加工，生产成产品，这里面包括产品信息上链，加工过程上链，为什么要详细到谁加工，因为只有追溯到人，事的身上，
+才能保证真实可靠，并且如果真的出现问题，也好追踪溯源，我觉得这也正是品牌的竞争力，当然，还有许多信息需要我们去扩展。
+<table>
+    <tr>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/104012_a3d0a8f3_4775150.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/104029_3b281f09_4775150.png"/></td>
+         <td><img src="https://images.gitee.com/uploads/images/2021/0510/104040_db0dd517_4775150.png"/></td>
+    </tr>
+     <tr>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/104051_ded404ae_4775150.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/104059_b6383ed4_4775150.png"/></td>
+         <td><img src="https://images.gitee.com/uploads/images/2021/0510/104107_7bc0ed1e_4775150.png"/></td>
+    </tr>
+</table>
 
 
-零售商生成产品唯一溯源ID
+### 零售商
+零售商这里主要就是签收产品，生成产品溯源ID，二维码可以自己去扩展，很简单。
+
 ![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/104115_bad29fb0_4775150.png "7.png")
 
-pc溯源
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0707/152117_9beee42b_4775150.png "QQ图片20210707152056.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0707/152129_8e55e697_4775150.png "QQ图片20210707152102.png")
-![img.png](install-fabric-env/static/img.png)
-小程序端溯源
+### pc溯源
+<table>
+    <tr>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0707/152117_9beee42b_4775150.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0707/152129_8e55e697_4775150.png"/></td>
+         <td><img src="install-fabric-env/static/img.png"/></td>
+    </tr>
+</table>
 
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/234302_29fe611b_4775150.png "7.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/234335_43fbec55_4775150.png "1.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/234347_e2572d95_4775150.png "3.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/234359_b5bac058_4775150.png "4.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/234413_33dd3e47_4775150.png "5.png")
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0510/234428_bc064965_4775150.png "6.png")
 
+### 小程序端溯源
+>  输入ID去溯源实际上不合理，应该扫码跳到小程序里面去，如果真的要做一个农产品品牌，那必须得有一个认证的小程序，消费者可以溯源，评价，上面还应该提供一些其他的功能。
+
+<table>
+    <tr>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/234302_29fe611b_4775150.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/234335_43fbec55_4775150.png"/></td>
+         <td><img src="https://images.gitee.com/uploads/images/2021/0510/234347_e2572d95_4775150.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/234359_b5bac058_4775150.png"/></td>
+        <td><img src="https://images.gitee.com/uploads/images/2021/0510/234413_33dd3e47_4775150.png"/></td>
+         <td><img src="https://images.gitee.com/uploads/images/2021/0510/234428_bc064965_4775150.png"/></td>
+    </tr>
+</table>
+
+
+## 申明
+
+之前有人说淘宝上，还有其他一些地方直接售卖此系统，还有文章使用此相同的图片和代码进行一些接活行为，我联系并给出了警告，
+此项目可以作为你的课程设计，毕业设计等，但不可直接照搬进你的论文，之前看到有论文里面直接将代码，目录，图片原封不动的搬进论文，没错，是原封不动的搬，和我上面的截图一模一样，
+项目都没运行，直接就在这里复制去并没有标注任何原作者的信息，这是很不尊重别人的，从而也看出你的不认真，**如果是你自己去运行过，那么你怎么用，怎么写都行**，我尊重你的认真，因为我也是一个认真且较真的人！
+
+### 公众号
+![输入图片说明](install-fabric-env/image.png)  
