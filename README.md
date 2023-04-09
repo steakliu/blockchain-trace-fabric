@@ -18,7 +18,7 @@
 分布式，可追溯等特性，能在很多场景发挥作用。  
 
 ### 组织架构图
-![输入图片说明](install-fabric-env/业务架构.png)
+![输入图片说明](https://gitee.com/ken_xue/Blockchain-APTrace-Fabric/raw/master/install-fabric-env/%E4%B8%9A%E5%8A%A1%E6%9E%B6%E6%9E%84.png)
 
 
 # 系统模块和技术  
